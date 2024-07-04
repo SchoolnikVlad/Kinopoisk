@@ -19,63 +19,10 @@ class Main:
         """
         try:
             self._driver.find_element(
-                By.CSS_SELECTOR, ".CheckboxCaptcha-Button"
+                By.CSS_SELECTOR, "CheckboxCaptcha-Button"
             ).click()
         except NoSuchElementException:
             pass
-
-    @allure.step("Вводим данные в поле поиска: {info_to_search}")
-    def enter_search_info(self, info_to_search: str):
-        """
-        Данный метод вводит данные в поисковое поле.
-        Args:
-            info_to_search (str): информация для поиска.
-        """
-        search_field = self._driver.find_element(
-            By.CSS_SELECTOR,
-            ".kinopoisk-header-search-form-input__input[aria-label='Фильмы, сериалы, персоны']",
-        )
-        search_field.click()
-        search_field.send_keys(info_to_search)
-
-    @allure.step("Получаем текст элементов в подсказках к поисковому полю.")
-    def get_search_field_list(self, selector: str) -> List[str]:
-        """Данный метод собирает список элементов
-        в подсказках к модулю поиска.
-        Args:
-            selector (str): селектор веб элемента.
-        Returns:
-            list: возвращает список элементов.
-        """
-        elements = self._driver.find_elements(By.CSS_SELECTOR, selector)
-        return [element.text for element in elements]
-
-    @allure.step("Нажимаем кнопку поиска")
-    def click_search_button(self):
-        """
-        Данный метод нажимает на кнопку поиска в модуле поиска.
-        """
-        self._driver.find_element(By.CSS_SELECTOR, "button[type='submit']").click()
-
-    @allure.step("Ожидаем и возвращаем элемент на странице результата поиска.")
-    def get_element_from_search_result_page(
-        self, css_selector: str
-    ) -> Tuple[WebElement, str]:
-        """Данный метод ожидает появление элемента на странице.
-        Возвращает данный веб элемент и текст ссылки.
-        Args:
-            css_selector (str): селектор элемента.
-        Returns:
-            Tuple[WebElement, str]: веб элемент и текст ссылки.
-        """
-        element = WebDriverWait(self._driver, 10).until(
-            EC.presence_of_element_located((By.CSS_SELECTOR, css_selector))
-        )
-        div_info = element.find_element(By.CSS_SELECTOR, "div.info")
-        p_name_result_search_page = div_info.find_element(By.CSS_SELECTOR, "p.name")
-        a_link = p_name_result_search_page.find_element(By.CSS_SELECTOR, "a")
-        text_link = a_link.text
-        return a_link, text_link
 
     @allure.step(
         "Переходим на сайт Кинопоиск. Выполняем поиск фильма или сериала. Название - {info_to_search}."
@@ -113,3 +60,18 @@ class Main:
                 film_text_link,
                 name_film_personal_page.text,
             )
+
+    @allure.step("Вводим данные в поле поиска: {info_to_search}")
+    def enter_search_info(self, info_to_search: str):
+        """
+        Данный метод вводит данные в поисковое поле.
+        Args:
+            info_to_search (str): информация для поиска.
+        """
+        search_field = self._driver.find_element(
+            By.CSS_SELECTOR,
+            "input[kinopoisk-header-search-form-input__input]",
+        )
+        search_field.click()
+        search_field.send_keys(info_to_search)
+
