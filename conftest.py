@@ -2,7 +2,6 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 from MainPageCapcha import Main
-from PersonalPage import PersonalPage
 from FilmApi import FilmApi
 import pytest
 import json
