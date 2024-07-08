@@ -39,3 +39,13 @@ def film_id(api):
     assert result_search_by_name["docs"][0]["name"] == "Майор Гром: Игра"
     print(result_search_by_name["docs"][0]["id"])
     return result_search_by_name["docs"][0]["id"]
+
+@pytest.fixture()
+def film_nope_id(api):
+    film_tv_series = ""
+    result_search_by_name, status_code = api.search_film_tv_series_by_name(
+        film_tv_series
+    )
+    assert status_code == 200
+    print(result_search_by_name["docs"][0]["id"]) == "70000001"
+    return result_search_by_name["docs"][0]["id"] == "70000001"

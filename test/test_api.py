@@ -38,3 +38,15 @@ def test_get_film_tv_series_by_field(api):
     result_search_by_field, status_code = api.search_by_fields(film_tv_series_field)
     assert status_code == 200
     assert "детектив" in [genre["name"] for genre in result_search_by_field]
+
+@allure.feature("Поиск фильма/сериала. Негативный")
+@allure.title("Тест на получение информации о фильме/сериале по его id номеру. Негативный")
+@allure.description(
+    "Получаем информацию согласно переданному id номеру фильма или сериала.Негативный"
+)
+@allure.id(4)
+@allure.severity("Blocker")
+def test_get_film_tv_series_by_nope_id(api, film_id):
+    result_search_by_nope_id, status_code = api.search_film_tv_series_by_nope_id(film_id)
+    assert status_code == 200
+    assert result_search_by_nope_id["name"] == "Майор Гром: Игра"

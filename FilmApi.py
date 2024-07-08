@@ -54,3 +54,16 @@ class FilmApi:
             headers=token_info,
         )
         return result_search_by_fields.json(), result_search_by_fields.status_code
+    
+
+    def search_film_tv_series_by_nope_id(self, id: int) -> Tuple[Dict[str, Any], int]:
+        """Метод позволяет выполнить поиск фильма или сериала по его id номеру.
+        Args:
+            id (int): id номер фильма или сериала.
+        Returns:
+            Tuple[Dict[str, Any], int]: json ответ с информацией о фильме/сериале и статус код.
+        """
+        result_search_by_nope_id = requests.get(
+            base_url_api + "movie/" + str(id), headers=token_info
+        )
+        return result_search_by_nope_id.json(), result_search_by_nope_id.status_code
